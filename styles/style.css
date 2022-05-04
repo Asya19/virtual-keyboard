@@ -1,10 +1,10 @@
 @font-face {
   font-family: Arial-regular;
-  src: url(fonts/arial/arial-regular.ttf);
+  src: url(../fonts/arial/arial-regular.ttf);
 }
 @font-face {
   font-family: Georgia-regular;
-  src: url(fonts/georgia/georgia-regular.ttf);
+  src: url(../fonts/georgia/georgia-regular.ttf);
 }
 
 html, body {
