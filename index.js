@@ -15,23 +15,47 @@ const KEYBOARD = document.querySelector('keyboard');
 let shiftState = false;
 let capsState = false;
 
+let text;
+let cursor;
+
+// let text = document.querySelector('textarea');
+
 let lang;
 
-if (localStorage.getItem('cur_language') !== undefined) lang = localStorage.getItem('cur_language'); else lang = 'en';
+// if (localStorage.getItem('cur_language') !== undefined) lang = localStorage.getItem('cur_language'); else lang = 'en';
+
+window.onload = () => {
+  CreateKeyboard();
+  addListeners();
+
+  text = document.querySelector('.textarea');
+  text.innerHTML = 'hisasdasda';
+  // cursor = text.selectionStart;
+  cursor = text.selectionEnd;
+
+
+  // text.focus;
+  // text.setSelectionRange(2,5);
+  // if (localStorage.getItem('cur_language') !== undefined) lang = localStorage.getItem('cur_language'); else lang = 'en';
+};
 
 function addListeners() {
   document.addEventListener('mousedown', (event) => onMouseDown(event));
+  // ;
+  // // document.addEventListener('mouseup', (event) => onMouseUp(event));
+  // // document.addEventListener('keydown', (event) => onMouseDown(event));
+  // // document.addEventListener('keyup', (event) => onMouseUp(event));
 }
 
 function CreateKeyboard() {
-  let content = `<textarea></textarea>
+  let content = `<textarea class="textarea" name="text" autofocus></textarea>
                  <div class="keyboard"></div>`;
   BODY.insertAdjacentHTML('afterbegin', content);
   let KEYBOARD = document.querySelector('.keyboard');
 
   for (let i in classForLengthBnt) {
     const addClass = classForLengthBnt[i];
-    let content = `<div class="oneBtn ${addClass}">
+    let content = `<div class="oneBtn ${addClass}" data-code="${keyCodes[i]}">
                       <span data-code="${keyCodes[i]}">${getLayOutKeyboard(i)}</span>
                    </div>`;
     KEYBOARD.insertAdjacentHTML('beforeend', content);
@@ -58,15 +82,72 @@ function getCurrentKeyByCode(i) {
 
 // Функция нажатия мышкой и клавиатурой
 
+// let text = document.querySelector('.textarea');
+// text.innerHTML = 'hi';
 function onMouseDown(event) {
   event.preventDefault();
+  let Kcode = '';
 
-  console.log('HI');
 
+  if (event.target.tagName === 'DIV' || event.target.tagName === 'SPAN') {
 
+    if (event.target.tagName === 'DIV' && event.target.className !== 'keyboard') {
+
+      event.target.classList.add('pushed');
+      Kcode = event.target.dataset.code;
+    }
+    if (event.target.tagName === 'SPAN') {
+      event.target.parentElement.classList.add('pushed');
+      Kcode = event.target.dataset.code;
+    }
+  }
+  // console.log(`code - ${code}`); // code - KeyG
+
+  
+
+  if (Kcode !== '') {
+    switch (Kcode) {
+      case 'Backspace':
+      // text.innerHTML += text.innerHTML.slice(0, -1);
+      // text.innerHTML = text.value.slice(0, -1);
+      text.innerHTML = text.value.slice(cursor, -1);
+      // text.innerHTML = 'Kcode';
+      // console.log('HI Backspace');
+      // console.log(text.value.slice(0, -1));
+        // text.selectionStart;
+      break;
+    }
+  }
+
+  // console.log('HI down');
 }
 
 
+// function onMouseUp(event) {
+//   event.preventDefault();
+
+//   console.log('HI up');
+
+
+// }
+
+
+// function onKeyDown(event) {
+//   event.preventDefault();
+
+//   console.log('HI down');
+
+
+// }
+
+
+// function onKeyUp(event) {
+//   event.preventDefault();
+
+//   console.log('HI up');
+
+
+// }
 
 function getLayOutKeyboard(i) {
   if (shiftState === true || capsState === true) {
@@ -76,9 +157,8 @@ function getLayOutKeyboard(i) {
   if (lang === 'en') return en[i];
   return ru[i];
 }
-window.onload = () => {
-  CreateKeyboard();
-  if (localStorage.getItem('cur_language') !== undefined) lang = localStorage.getItem('cur_language'); else lang = 'en';
-};
 
   // console.log(ru_shift.length);
+
+
+    // text.setSelectionRange(2,5); выделить текст
