@@ -43,7 +43,7 @@ textarea {
   margin: 0 auto;
   padding: 15px;
   border-radius: 5px;
-  background: #b6b6b6;
+  background: #7c7b7b;
 }
 .oneBtn {
   display: flex;
@@ -54,14 +54,14 @@ textarea {
   height: 60px;
   margin-right: 5px;
   background: #f5f5f5;
-  border-radius: 3px;
-  box-shadow: 3px 4px 4px 0px rgb(0 0 0 / 55%);
+  border-radius: 6px;
+  box-shadow: 2px 4px 4px rgb(0 0 0 / 25%);
+  box-sizing: border-box;
+  border: 3px #bbbbbb solid;
 }
-.oneBtn:hover {
-  background: #b50202c5;
-  color: #fff;
+.oneBtn:hover, .oneBtn.specialBtn:hover {
+  border: 3px #080808c5 solid;
 }
-
 .oneBtn.last {
   margin-right: 0;
 }
@@ -70,11 +70,8 @@ textarea {
 }
 .oneBtn.specialBtn {
   color: #fff;
-  background: rgb(59, 59, 59);
+  background: rgb(68, 68, 68);
   font-weight: 100;
-}
-.oneBtn.specialBtn:hover {
-  background: #bf0404ad;
 }
 .oneBtn.spaceBtn {
   width: 385px;
@@ -97,4 +94,13 @@ textarea {
   100% {
     background-color: rgba(255, 0, 0, 0.316);
   }
+}
+.key:active, .key.active {
+  background: rgb(40, 40, 40);
+  box-sizing: border-box;
+  border: none;
+  box-shadow: -1px -2px 4px rgba(0, 0, 0, 0.25);
+}
+.key.active .oneBtn:hover, .oneBtn.specialBtn:hover {
+  border: 3px rgb(40, 40, 40) solid;
 }
