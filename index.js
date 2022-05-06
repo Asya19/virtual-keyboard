@@ -9,7 +9,7 @@ window.onload = () => {
   const ru_shift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', '/', 'Del', 'Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', '/', '&uarr;', 'Shift', 'Ctrl', 'Win', 'Alt', '__________', 'Alt', '&larr;', '&darr;', '&rarr;', 'Ctrl'];
 
   const keyCodes = ['Apostrophe', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
-  const classForLengthBnt = ['', '', '', '', '', '', '', '', '', '', '', '', '', 'twoBtnLength last specialBtn', ' specialBtn', '', '', '', '', '', '', '', '', '', '', '', '', '', 'last specialBtn', 'twoBtnLength specialBtn capsButton', '', '', '', '', '', '', '', '', '', '', '', 'twoBtnLength last specialBtn', 'twoBtnLength specialBtn key_leftShift', '', '', '', '', '', '', '', '', '', '', '', 'twoBtnLength last specialBtn key_rightShift', 'twoBtnLength specialBtn', 'specialBtn', 'specialBtn', 'spaceBtn', 'specialBtn', '', '', '', 'specialBtn last'];
+  const classForLengthBnt = ['', '', '', '', '', '', '', '', '', '', '', '', '', 'twoBtnLength last specialBtn', ' specialBtn', '', '', '', '', '', '', '', '', '', '', '', '', '', 'last specialBtn', 'twoBtnLength specialBtn capsButton', '', '', '', '', '', '', '', '', '', '', '', 'twoBtnLength last specialBtn', 'twoBtnLength specialBtn key_leftShift', '', '', '', '', '', '', '', '', '', '', 'arrow', 'twoBtnLength last specialBtn key_rightShift', 'twoBtnLength specialBtn', 'specialBtn', 'specialBtn', 'spaceBtn arrow', 'specialBtn', 'arrow', 'arrow', 'arrow', 'specialBtn last'];
 
   const BODY = document.querySelector('body');
 
@@ -21,16 +21,29 @@ window.onload = () => {
   let shift = false;
 
 
+  // const createDomNode = (element, innerHTML, ...classes) => {
+  //   const node = document.createElement(element);
+  //   node.classList.add(...classes);
+  //   node.innerHTML = innerHTML;
+  //   return node;
+  // };
+
+  // const textArea = createDomNode('textarea', '', 'textArea');
 
   CreateKeyboard();
+  // let textArea;
+  let textArea = document.querySelector('textarea');
+
 
 
   // должно быть в классе
   function CreateKeyboard() {
     languageCheck();
-    let content = `<textarea class="textArea" name="text" autofocus></textarea>
+    let content = `<textarea class="textArea"></textarea>
                   <div class="keyboard"></div>`;
     BODY.insertAdjacentHTML('afterbegin', content);
+    // let containerKeyboard = `<div class="keyboard"></div>`;
+    // textArea.insertAdjacentHTML('afterbegin', containerKeyboard);
 
 
 
@@ -109,17 +122,19 @@ window.onload = () => {
 
   function keyPress(event, button, dataCode) {
 
-    let textArea = document.querySelector('.textArea');
-    // console.log('hi keyPress');
+    // textArea = document.querySelector('textarea');
+
     let text = '';
+    // textArea.innerHTML = text;
     let cursor = textArea.selectionStart;
-    textArea.focus();
     event.preventDefault();
+    textArea.focus();
 
     if (dataCode === 'CapsLock') changeCapsLock(event);
     if (dataCode === 'Tab') text = '    ';
-    if (dataCode === 'Tab') text = '\n';
-    if (dataCode === 'Tab') text = '-1';
+    if (dataCode === 'Space') text = ' ';
+    if (dataCode === 'Enter') text = '\n';
+    if (dataCode === 'Backspace') text = '-1';
     if (dataCode === 'ShiftLeft' || dataCode === 'ShiftRight') updateKeyboard(event);
     if (dataCode === 'ArrowLeft' && cursor > 0) textArea.setSelectionRange(cursor - 1, cursor - 1);
 
@@ -179,29 +194,31 @@ window.onload = () => {
     }
 
     // textArea.innerHTML = 'ddd';
+    // textArea.innerHTML += text;
+    
+    // textArea.innerHTML = text; arrow
+    
+    if ((!button.classList.contains('specialBtn')) && (!button.classList.contains('arrow'))) {
+      text = button.textContent.trim();
+      removeShift(event);
+    }
+
     if (text) {
-      
       let textAfterCursor = textArea.value.substring(textArea.selectionEnd);
       let textBeforeCursor = textArea.value.substring(0, cursor);
 
       if (text === '-1') {
         text = '';
-
         if (cursor === textArea.selectionEnd) {
           textBeforeCursor = textBeforeCursor.slice(0, -1);
           cursor -= (cursor > 0) ? 2 : 1;
         } else cursor -= 1;
-
       }
-      textArea.innerText = textBeforeCursor + text + textAfterCursor;
-      textArea.setSelectionRange(cursor++, cursor++);
+      textArea.value = textBeforeCursor + text + textAfterCursor;
+      textArea.setSelectionRange(cursor + 1, cursor + 1);
       if (text === '    ') textArea.setSelectionRange(cursor + 4, cursor + 4);
     }
-    
-    if (!button.classList.contains('specialBtn')) {
-      text = button.textContent;
-      removeShift(event);
-    }
+    // textArea.innerHTML += text;
   }
   // должно быть в классе
   function changeCapsLock(event) {
