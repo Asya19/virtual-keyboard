@@ -15,13 +15,14 @@ window.onload = () => {
 
   let shiftState = false;
   let capsState = false;
-
+  
+  let lang = 'en';
   let caps = 'off';
   let shift = false;
 
   // let text;
   // let cursor;
-  let lang;
+  
 
   let textArea = document.querySelector('.textArea');
   text = document.querySelector('.textarea');
@@ -34,6 +35,25 @@ window.onload = () => {
   // text.innerHTML = 'hisasdasda';
   // cursor = text.selectionStart;
   // cursor = text.selectionEnd;
+
+  function languageCheck() {
+    if (localStorage.getItem('lang')) {
+      lang = localStorage.getItem('lang');
+    } else {
+      localStorage.setItem('lang', lang);
+    }
+  }
+
+  function languageChange(event) {
+    if (lang === 'en') {
+      lang = 'ru';
+    } else {
+      lang = 'en';
+    }
+    localStorage.setItem('lang', lang);
+    updateKeyboard(event);
+  }
+
 
 
   document.querySelector('.keyboard').addEventListener('click', (event) => {
@@ -56,6 +76,7 @@ window.onload = () => {
 
   // должно быть в классе
   function CreateKeyboard() {
+    languageCheck();
     let content = `<textarea class="textArea" name="text" autofocus></textarea>
                   <div class="keyboard"></div>`;
     BODY.insertAdjacentHTML('afterbegin', content);
@@ -63,7 +84,7 @@ window.onload = () => {
 
     for (let i in classForLengthBnt) {
       const addClass = classForLengthBnt[i];
-      let content = `<div class="oneBtn key ${addClass}" data-code="${keyCodes[i]}">
+      let content = `<div class="oneBtn key ${addClass}" data-code="${keyCodes[i]}"  data-ru-shift="${getLayOutKeyboard(i)}" data-en-shift="${getLayOutKeyboard(i)}">
                         <span>${getLayOutKeyboard(i)}</span>
                     </div>`;
       KEYBOARD.insertAdjacentHTML('beforeend', content);
@@ -97,18 +118,15 @@ window.onload = () => {
   function keyPress(event, button, keyCode) {
     // console.log('hi keyPress');
     let text = '';
-    let cursor = textArea.selectionStart;
+    // let cursor = textArea.selectionStart;
     event.preventDefault();
-    textArea.focus();
+    // textArea.focus();
 
     if (keyCode === 'CapsLock') changeCapsLock(event);
 
 
 
   }
-
-
-
   // должно быть в классе
   function changeCapsLock(event) {
     if (caps === 'on') {
@@ -117,20 +135,33 @@ window.onload = () => {
       caps = 'on';
     }
     updateKeyboard(event);
-
-
   }
 
    // надо будет написать эту функцию
           // Update keyboard if switch language or pressing Shift
           // updateKeyboard(event)
 
+  function updateKeyboard(event) {
+    // const { lang } = this;
+    // console.log(event);
+
+    if (event.shiftKey || shift) {
+      document.querySelectorAll('.key').forEach((e) => {
+        
+        if (e.dataset[`${lang}Shift`]) {
+
+          // if (caps === 'on') {
+            
+          // }
+
+        }
 
 
+      });
+    }
 
-
-
-
-
+  }
 
 };
+
+// console.log(`key`);
