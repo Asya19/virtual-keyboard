@@ -1,7 +1,7 @@
 window.onload = () => {
 
   // Массив знаков на два языка
-  const en = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&uarr;', 'Shift', 'Ctrl', 'Win', 'Alt', '__________', 'Alt', '&larr;', '&darr;', '&rarr;', 'Ctrl'];
+const en = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del', 'Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&uarr;', 'Shift', 'Ctrl', 'Win', 'Alt', '__________', 'Alt', '&larr;', '&darr;', '&rarr;', 'Ctrl'];
   const ru = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\', 'Del', 'Caps Lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '&uarr;', 'Shift', 'Ctrl', 'Win', 'Alt', '__________', 'Alt', '&larr;', '&darr;', '&rarr;', 'Ctrl'];
 
   // Массив знаков, когда зажат SHIFT
@@ -34,15 +34,13 @@ window.onload = () => {
 
     for (let i in classForLengthBnt) {
       const addClass = classForLengthBnt[i];
-      // let content = `<div class="oneBtn key ${addClass}" data-code="${keyCodes[i]}" data-ru-shift="${ru[i]}" data-en-shift="${en[i]}">
-      //                   <span>${getLayOutKeyboard(i)}</span>
-      //               </div>`;
+
       let content = `<div class="oneBtn key ${addClass}" data-code="${keyCodes[i]}" data-ru-shift="${ru_shift[i]}" data-en-shift="${en_shift[i]}" data-ru="${ru[i]}" data-en="${en[i]}">
-      ${getLayOutKeyboard(i)}
-                    </div>`;
+      ${getLayOutKeyboard(i)}</div>`;
       KEYBOARD.insertAdjacentHTML('beforeend', content);
-    };
-    let mes = `<p>Клавиатура создана в операционной системе Windows <br> Для переключения языка комбинация: левыe Shift + Alt<\p>`;
+    }
+
+    let mes = `<p>Клавиатура создана в операционной системе Windows <br> Для переключения языка комбинация: левыe Shift + Alt<p>`;
     BODY.insertAdjacentHTML('beforeend', mes);
   }
 
