@@ -46,6 +46,7 @@ textarea {
   padding: 15px;
   border-radius: 5px;
   background: #7c7b7b;
+  user-select: none;
 }
 .oneBtn {
   display: flex;
