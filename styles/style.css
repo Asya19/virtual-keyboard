@@ -67,7 +67,7 @@ textarea {
 .oneBtn.last {
   margin-right: 0;
 }
-.oneBtn.twoBtnLength {
+.oneBtn.twoBtnLength, .oneBtn.twoBackslash {
   width: 125px;
 }
 .oneBtn.specialBtn {
@@ -78,25 +78,7 @@ textarea {
 .oneBtn.spaceBtn {
   width: 385px;
 }
-.upper {
-  position: absolute;
-  margin-left: -15px;
-  margin-top: -12px;
-}
-.pushed {
-  animation: push_button 0.5s;
-}
-@keyframes push_button {
-  0% {
-    background-color: #333;
-  }
-  50% {
-    background-image: radial-gradient(#333, rgba(255, 0, 0, 0.649));
-  }
-  100% {
-    background-color: rgba(255, 0, 0, 0.316);
-  }
-}
+
 .key:active, .key.active {
   background: rgb(40, 40, 40);
   box-sizing: border-box;
@@ -106,9 +88,6 @@ textarea {
 .key.capsOn {
   color: red;
 }
-/* .key.capsOff {
-  color: #fff;
-} */
 .key.active .oneBtn:hover, .oneBtn.specialBtn:hover {
   border: 3px rgb(40, 40, 40) solid;
 }
